@@ -1,4 +1,8 @@
+import me.rainstorm.ds.ListNode;
+import me.rainstorm.util.ListNodeUtil;
 import org.junit.Test;
+
+import static me.rainstorm.util.ListNodeUtil.buildListNode;
 
 /**
  * [2] 两数相加
@@ -33,7 +37,7 @@ public class N0002AddTwoNumbers {
         ListNode l1 = buildListNode(new int[]{2, 4, 3});
         ListNode l2 = buildListNode(new int[]{5, 6, 4});
 
-        assert "708".equals(toString(addTwoNumbers(l1, l2)));
+        assert "708".equals(ListNodeUtil.toString(addTwoNumbers(l1, l2)));
     }
 
     @Test
@@ -41,7 +45,7 @@ public class N0002AddTwoNumbers {
         ListNode l1 = buildListNode(new int[]{9, 9});
         ListNode l2 = buildListNode(new int[]{1});
 
-        assert "001".equals(toString(addTwoNumbers(l1, l2)));
+        assert "001".equals(ListNodeUtil.toString(addTwoNumbers(l1, l2)));
     }
 
     @Test
@@ -49,7 +53,7 @@ public class N0002AddTwoNumbers {
         ListNode l1 = buildListNode(new int[]{1});
         ListNode l2 = buildListNode(new int[]{9, 9});
 
-        assert "001".equals(toString(addTwoNumbers(l1, l2)));
+        assert "001".equals(ListNodeUtil.toString(addTwoNumbers(l1, l2)));
     }
 
     @Test
@@ -57,31 +61,7 @@ public class N0002AddTwoNumbers {
         ListNode l1 = buildListNode(new int[]{0});
         ListNode l2 = buildListNode(new int[]{9, 9});
 
-        assert "99".equals(toString(addTwoNumbers(l1, l2)));
-    }
-
-    private ListNode buildListNode(int[] nums) {
-        if (nums.length == 0) {
-            return null;
-        }
-
-        ListNode head = new ListNode(nums[0]);
-        ListNode tmp = head;
-        for (int i = 1; i < nums.length; ++i) {
-            tmp.next = new ListNode(nums[i]);
-            tmp = tmp.next;
-        }
-        return head;
-    }
-
-    public String toString(ListNode head) {
-        StringBuilder builder = new StringBuilder();
-        ListNode tmp = head;
-        while (tmp != null) {
-            builder.append(tmp.val);
-            tmp = tmp.next;
-        }
-        return builder.toString();
+        assert "99".equals(ListNodeUtil.toString(addTwoNumbers(l1, l2)));
     }
 
     public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
@@ -117,14 +97,5 @@ public class N0002AddTwoNumbers {
         l2.val = sum % 10;
         l2.next = addTwoNumbers(l1.next, l2.next, sum > 9);
         return l2;
-    }
-
-    class ListNode {
-        int val;
-        ListNode next;
-
-        ListNode(int x) {
-            val = x;
-        }
     }
 }

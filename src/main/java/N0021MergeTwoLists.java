@@ -1,3 +1,5 @@
+import me.rainstorm.ds.ListNode;
+
 /**
  * @author baochen1.zhang
  * @date 2019.04.02
@@ -39,16 +41,6 @@ public class N0021MergeTwoLists {
         } else {
             l2.next = mergeTwoLists(l1, l2.next);
             return l2;
-        }
-    }
-
-
-    class ListNode {
-        int val;
-        ListNode next;
-
-        ListNode(int x) {
-            val = x;
         }
     }
 }
