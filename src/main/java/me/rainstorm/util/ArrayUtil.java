@@ -1,5 +1,6 @@
 package me.rainstorm.util;
 
+import java.util.List;
 import java.util.StringJoiner;
 
 /**
@@ -25,6 +26,20 @@ public class ArrayUtil {
         int length = Math.min(nums.length, len);
         for (int i = 0; i < length; ++i) {
             builder.append(nums[i]);
+        }
+        return builder.toString();
+    }
+
+    public static <T> String toString(List<T> nums, int len) {
+        StringBuilder builder = new StringBuilder();
+        int length = Math.min(nums.size(), len);
+        int i = 0;
+        for (T item : nums) {
+            builder.append(item.toString());
+            ++i;
+            if (i >= length) {
+                break;
+            }
         }
         return builder.toString();
     }
