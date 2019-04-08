@@ -21,6 +21,9 @@
     │   │   │   └── rainstorm
     │   │   │       ├── ds
     │   │   │       │   ├── ListNode.java
+    │   │   │       │   ├── MinStack.java
+    │   │   │       │   ├── QueueStack.java
+    │   │   │       │   ├── StackQueue.java
     │   │   │       │   └── TreeNode.java
     │   │   │       └── util
     │   │   │           ├── ArrayUtil.java
@@ -61,11 +64,17 @@
     │   │   │   ├── N0219ContainsNearbyDuplicate.java
     │   │   │   ├── N0268MissingNumber.java
     │   │   │   └── N0283MoveZeros.java
-    │   │   └── s0400
-    │   │       ├── N0414ThirdMax.java
-    │   │       └── N0448FindDisappearedNumbers.java
+    │   │   ├── s0400
+    │   │   │   ├── N0414ThirdMax.java
+    │   │   │   ├── N0448FindDisappearedNumbers.java
+    │   │   │   └── N0496NextGreaterElement.java
+    │   │   ├── s0600
+    │   │   │   └── N0682BaseballGame.java
+    │   │   └── s0800
+    │   │       └── N0844BackspaceCompare.java
     │   └── resources
     └── test
         └── java
+
 ```
 
