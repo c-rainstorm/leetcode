@@ -1,5 +1,6 @@
 package s0700;
 
+import me.rainstorm.util.BitUtil;
 import org.junit.Test;
 
 /**
@@ -72,19 +73,9 @@ public class N0762CountPrimeSetBits {
     public int countPrimeSetBits(int L, int R) {
         int count = 0;
         for (int i = L; i <= R; ++i) {
-            if (isPrime(countBit(i))) {
+            if (isPrime(BitUtil.countBit(i))) {
                 count++;
             }
-        }
-        return count;
-    }
-
-    private int countBit(int num) {
-        int count = 0;
-        int target = num;
-        while (target != 0) {
-            count++;
-            target &= (target - 1);
         }
         return count;
     }
