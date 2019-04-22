@@ -1,5 +1,7 @@
 package me.rainstorm.util;
 
+import org.junit.Test;
+
 import java.util.Arrays;
 
 /**
@@ -15,7 +17,7 @@ public class SortUtil {
     }
 
     private static int[] quick3way(int[] array, int lo, int hi) {
-        if(lo >= hi){
+        if (lo >= hi) {
             return array;
         }
         int i = lo + 1;
@@ -53,7 +55,10 @@ public class SortUtil {
         return array;
     }
 
-    private static int partition(int[] array, int lo, int hi) {
+    public static int partition(int[] array, int lo, int hi) {
+        if (lo == hi) {
+            return lo;
+        }
         int v = array[lo];
         int i = lo;
         int j = hi + 1;
@@ -77,9 +82,23 @@ public class SortUtil {
         return j;
     }
 
+    /**
+     * 使用位运算的实现方法有 bug，当 i == j 时，会将 array[i] 置为0;
+     *
+     * @param array 数组
+     * @param i     第一个下标
+     * @param j     第二个下标
+     */
     private static void swap(int[] array, int i, int j) {
-        array[i] = array[i] ^ array[j];
-        array[j] = array[i] ^ array[j];
-        array[i] = array[i] ^ array[j];
+        int tmp = array[i];
+        array[i] = array[j];
+        array[j] = tmp;
+    }
+
+    @Test
+    public void swapTest() {
+        int[] array = new int[]{1};
+        swap(array, 0, 0);
+        assert "[1]".equals(Arrays.toString(array));
     }
 }
