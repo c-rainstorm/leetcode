@@ -9,9 +9,15 @@ import java.util.Random;
 public class IntegerBSTTest extends BaseBinarySearchTreeTest<Integer, Long> {
 
     private static final Random RANDOM = new Random(System.currentTimeMillis());
+    private static final int BOUND = SIZE * 10;
+
+    @Override
+    protected BinarySearchTree<Integer, Long> newBSTInstance() {
+        return new BinarySearchTree<>();
+    }
 
     @Override
     protected TreeNode<Integer, Long> randomNode() {
-        return new TreeNode<>(RANDOM.nextInt(100), System.currentTimeMillis());
+        return new TreeNode<>(RANDOM.nextInt(BOUND), System.currentTimeMillis());
     }
 }

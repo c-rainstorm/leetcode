@@ -8,11 +8,7 @@ public class BinarySearchTree<Key extends Comparable<Key>, Value>
         extends AbstractSymbolTable<Key, Value> {
 
     @Override
-    public void put(Key key, Value value) {
-        root = put(root, key, value);
-    }
-
-    private TreeNode<Key, Value> put(TreeNode<Key, Value> root, Key key, Value value) {
+    TreeNode<Key, Value> put(TreeNode<Key, Value> root, Key key, Value value) {
         if (root == null) {
             return new TreeNode<>(key, value);
         }
@@ -30,7 +26,7 @@ public class BinarySearchTree<Key extends Comparable<Key>, Value>
         return root;
     }
 
-    private void updateSize(TreeNode<Key, Value> root) {
+    void updateSize(TreeNode<Key, Value> root) {
         if (root == null) {
             return;
         }
@@ -38,38 +34,8 @@ public class BinarySearchTree<Key extends Comparable<Key>, Value>
         root.size = size(root.left) + size(root.right) + 1;
     }
 
-    private int size(TreeNode<Key, Value> root) {
-        if (root == null) {
-            return 0;
-        }
-        return root.size;
-    }
-
     @Override
-    public Value get(Key key) {
-        return get(root, key);
-    }
-
-    private Value get(TreeNode<Key, Value> root, Key key) {
-        if (root == null) {
-            return null;
-        }
-        int cmp = key.compareTo(root.key);
-        if (cmp > 0) {
-            return get(root.right, key);
-        } else if (cmp < 0) {
-            return get(root.left, key);
-        } else {
-            return root.value;
-        }
-    }
-
-    @Override
-    public void delete(Key key) {
-        root = delete(root, key);
-    }
-
-    private TreeNode<Key, Value> delete(TreeNode<Key, Value> root, Key key) {
+    TreeNode<Key, Value> delete(TreeNode<Key, Value> root, Key key) {
         if (root == null) {
             return null;
         }
@@ -94,70 +60,17 @@ public class BinarySearchTree<Key extends Comparable<Key>, Value>
         }
 
         updateSize(root);
+
+        return afterDelete(root);
+    }
+
+    protected TreeNode<Key, Value> afterDelete(TreeNode<Key, Value> root) {
+        // 普通二分查找树不需要做任何操作
         return root;
     }
 
     @Override
-    public Key min() {
-        if (isEmpty()) {
-            return null;
-        }
-        return min(root).key;
-    }
-
-    private TreeNode<Key, Value> min(TreeNode<Key, Value> root) {
-        TreeNode<Key, Value> min = root;
-        while (min.left != null) {
-            min = min.left;
-        }
-        return min;
-    }
-
-    @Override
-    public Key max() {
-        if (isEmpty()) {
-            return null;
-        }
-        return max(root).key;
-    }
-
-    private TreeNode<Key, Value> max(TreeNode<Key, Value> root) {
-        TreeNode<Key, Value> max = root;
-        while (max.right != null) {
-            max = max.right;
-        }
-        return max;
-    }
-
-    @Override
-    public void deleteMin() {
-        if (isEmpty()) {
-            return;
-        }
-        root = deleteMin(root);
-    }
-
-    private TreeNode<Key, Value> deleteMin(TreeNode<Key, Value> root) {
-        return delete(root, min(root).key);
-    }
-
-    @Override
-    public void deleteMax() {
-        if (isEmpty()) {
-            return;
-        }
-        root = deleteMax(root);
-    }
-
-    private TreeNode<Key, Value> deleteMax(TreeNode<Key, Value> root) {
-        return delete(root, max(root).key);
-    }
-
-    boolean isValid() {
-        return isValid(root);
-    }
-
-    private boolean isValid(TreeNode<Key, Value> root) {
+    boolean isValid(TreeNode<Key, Value> root) {
         if (root == null) {
             return true;
         }

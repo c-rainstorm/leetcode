@@ -12,9 +12,9 @@ import java.util.List;
  * @date 2019.05.02
  */
 public abstract class BaseBinarySearchTreeTest<Key extends Comparable<Key>, Value> {
-    private BinarySearchTree<Key, Value> binarySearchTree;
-    private List<Key> keyList = new ArrayList<>(100);
-    private static final int SIZE = 10;
+    protected BinarySearchTree<Key, Value> binarySearchTree;
+    protected List<Key> keyList = new ArrayList<>(SIZE);
+    protected static final int SIZE = 100;
 
     protected abstract TreeNode<Key, Value> randomNode();
 
@@ -24,15 +24,20 @@ public abstract class BaseBinarySearchTreeTest<Key extends Comparable<Key>, Valu
     }
 
     private BinarySearchTree<Key, Value> createBST(List<Key> keyList) {
-        BinarySearchTree<Key, Value> binarySearchTree = new BinarySearchTree<>();
+        BinarySearchTree<Key, Value> binarySearchTree = newBSTInstance();
         while (binarySearchTree.size() < SIZE) {
             TreeNode<Key, Value> keyValue = randomNode();
+            if (binarySearchTree.contains(keyValue.key)) {
+                continue;
+            }
             keyList.add(keyValue.key);
             binarySearchTree.put(keyValue.key, keyValue.value);
             assert binarySearchTree.isValid();
         }
         return binarySearchTree;
     }
+
+    protected abstract BinarySearchTree<Key, Value> newBSTInstance();
 
     @Test
     public void put() {
