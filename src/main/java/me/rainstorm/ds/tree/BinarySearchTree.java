@@ -23,6 +23,12 @@ public class BinarySearchTree<Key extends Comparable<Key>, Value>
         }
 
         updateSize(root);
+
+        return afterPut(root, key);
+    }
+
+    protected TreeNode<Key, Value> afterPut(TreeNode<Key, Value> root, Key key) {
+        // 普通二分查找树不需要做任何操作
         return root;
     }
 
@@ -55,6 +61,7 @@ public class BinarySearchTree<Key extends Comparable<Key>, Value>
                 assert rightMin != null;
                 rightMin.right = delete(root.right, rightMin.key);
                 rightMin.left = root.left;
+                rightMin.color = root.color;
                 root = rightMin;
             }
         }

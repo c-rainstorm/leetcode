@@ -17,7 +17,7 @@ public class IntegerBSTTest extends BaseBinarySearchTreeTest<Integer, Long> {
     }
 
     @Override
-    protected TreeNode<Integer, Long> randomNode() {
+    protected TreeNode<Integer, Long> randomNode(int index) {
         return new TreeNode<>(RANDOM.nextInt(BOUND), System.currentTimeMillis());
     }
 }

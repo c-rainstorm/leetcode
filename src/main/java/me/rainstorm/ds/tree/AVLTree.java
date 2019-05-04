@@ -7,38 +7,23 @@ package me.rainstorm.ds.tree;
 public class AVLTree<Key extends Comparable<Key>, Value>
         extends BinarySearchTree<Key, Value> {
     @Override
-    TreeNode<Key, Value> put(TreeNode<Key, Value> root, Key key, Value value) {
-        if (root == null) {
-            return new TreeNode<>(key, value, 1);
-        }
-        int compare = root.key.compareTo(key);
-        if (compare > 0) {
-            // 当前节点值比插入值大，后续插到左子树上
-            root.left = put(root.left, key, value);
-            if (height(root.left) - height(root.right) == 2) {
-                if (root.left.key.compareTo(key) > 0) {
-                    // 左子树的值较大，新值插入左子树的左侧
-                    root = leftSingleRotate(root);
-                } else {
-                    root = leftDoubleRotate(root);
-                }
+    protected TreeNode<Key, Value> afterPut(TreeNode<Key, Value> root, Key key) {
+        int heightDiff = height(root.left) - height(root.right);
+        if (heightDiff == 2) {
+            if (root.left.key.compareTo(key) > 0) {
+                // 左子树的值较大，新值插入左子树的左侧
+                root = leftSingleRotate(root);
+            } else {
+                root = leftDoubleRotate(root);
             }
-        } else if (compare < 0) {
-            root.right = put(root.right, key, value);
-            if (height(root.right) - height(root.left) == 2) {
-                if (root.right.key.compareTo(key) < 0) {
-                    // 右子树的值较小，新值插入右子树的右侧
-                    root = rightSingleRotate(root);
-                } else {
-                    root = rightDoubleRotate(root);
-                }
+        } else if (heightDiff == -2) {
+            if (root.right.key.compareTo(key) < 0) {
+                // 右子树的值较小，新值插入右子树的右侧
+                root = rightSingleRotate(root);
+            } else {
+                root = rightDoubleRotate(root);
             }
-        } else {
-            root.value = value;
         }
-
-        updateSize(root);
-
         return root;
     }
 
@@ -81,7 +66,6 @@ public class AVLTree<Key extends Comparable<Key>, Value>
         if (root == null) {
             return;
         }
-
         super.updateSize(root);
         root.height = Math.max(height(root.left), height(root.right)) + 1;
     }

@@ -6,6 +6,7 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 
 /**
  * @author baochen1.zhang
@@ -14,9 +15,9 @@ import java.util.List;
 public abstract class BaseBinarySearchTreeTest<Key extends Comparable<Key>, Value> {
     protected BinarySearchTree<Key, Value> binarySearchTree;
     protected List<Key> keyList = new ArrayList<>(SIZE);
-    protected static final int SIZE = 100;
+    protected static final int SIZE = 10;
 
-    protected abstract TreeNode<Key, Value> randomNode();
+    protected abstract TreeNode<Key, Value> randomNode(int index);
 
     @Before
     public void createBST() {
@@ -26,7 +27,7 @@ public abstract class BaseBinarySearchTreeTest<Key extends Comparable<Key>, Valu
     private BinarySearchTree<Key, Value> createBST(List<Key> keyList) {
         BinarySearchTree<Key, Value> binarySearchTree = newBSTInstance();
         while (binarySearchTree.size() < SIZE) {
-            TreeNode<Key, Value> keyValue = randomNode();
+            TreeNode<Key, Value> keyValue = randomNode(binarySearchTree.size());
             if (binarySearchTree.contains(keyValue.key)) {
                 continue;
             }
@@ -46,7 +47,8 @@ public abstract class BaseBinarySearchTreeTest<Key extends Comparable<Key>, Valu
 
     @Test
     public void get() {
-        TreeNode<Key, Value> keyValue = randomNode();
+        Random random = new Random(System.currentTimeMillis());
+        TreeNode<Key, Value> keyValue = randomNode(random.nextInt(binarySearchTree.size()));
         binarySearchTree.put(keyValue.key, keyValue.value);
 
         assert binarySearchTree.isValid();
