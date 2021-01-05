@@ -86,50 +86,28 @@ public class N0020ValidParentheses {
         assert isValid("{[]}");
     }
 
-    public void case6(){
+    @Test
+    public void case6() {
         assert !isValid("]");
     }
 
     public boolean isValid(String s) {
-        if (s == null || s.length() == 0) {
-            return true;
-        }
-        Stack<Character> paras = new Stack<>();
-        for (int i = 0; i < s.length(); ++i) {
-            char ch = s.charAt(i);
-            switch (ch) {
-                case '(':
-                case '[':
-                case '{':
-                    paras.push(ch);
-                    break;
-                case ')':
-                    if (dontMatch(paras, '(')) {
-                        return false;
-                    }
-                    break;
-                case ']':
-                    if (dontMatch(paras, '[')) {
-                        return false;
-                    }
-                    break;
-                case '}':
-                    if (dontMatch(paras, '{')) {
-                        return false;
-                    }
-                    break;
-                default:
-                    break;
-            }
-        }
-        return paras.empty();
-    }
-
-    private boolean dontMatch(Stack<Character> paras, char c) {
-        if (paras.empty()) {
+        if (s == null) {
             return true;
         }
 
-        return paras.pop() != c;
+        // 奇数一定是不合法
+        if (((s.length() % 2) == 1)) {
+            return false;
+        }
+
+        Stack<Character> stack = new Stack<>();
+        for (char c : s.toCharArray()) {
+            if (c == '(') stack.push(')');
+            else if (c == '[') stack.push(']');
+            else if (c == '{') stack.push('}');
+            else if (stack.isEmpty() || c != stack.pop()) return false;
+        }
+        return stack.isEmpty();
     }
 }
