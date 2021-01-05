@@ -9,6 +9,8 @@ import me.rainstorm.ds.ListNode;
  */
 public class N0142LinkedListCycleII {
     public ListNode detectCycle(ListNode head) {
+        if (head == null) return null;
+
         // 步骤一：使用快慢指针判断链表是否有环
         ListNode slow = head;
         ListNode fast = head;

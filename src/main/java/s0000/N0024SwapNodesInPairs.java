@@ -4,6 +4,7 @@ import me.rainstorm.ds.ListNode;
 
 /**
  * sen ->  first -> second -> third
+ * sen -> second -> third    first -> second -> third
  * sen -> second -> first -> third
  * <p>
  * https://leetcode-cn.com/problems/swap-nodes-in-pairs/
