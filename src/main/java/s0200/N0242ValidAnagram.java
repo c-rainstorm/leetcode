@@ -42,18 +42,19 @@ public class N0242ValidAnagram {
         }
 
         Map<Character, Integer> table = new HashMap<>(s.length());
-        for (int i = 0; i < s.length(); i++) {
-            char ch = s.charAt(i);
+        for (char ch : s.toCharArray()) {
             table.put(ch, table.getOrDefault(ch, 0) + 1);
         }
 
-        for (int i = 0; i < t.length(); i++) {
-            char ch = t.charAt(i);
+        for (char ch : t.toCharArray()) {
             Integer count = table.getOrDefault(ch, 0);
-            if (count <= 0) {
+            if (count == 0) {
                 return false;
+            } else if (count == 1) {
+                table.remove(ch);
+            } else {
+                table.put(ch, count - 1);
             }
-            table.put(ch, count - 1);
         }
         return table.isEmpty();
     }
