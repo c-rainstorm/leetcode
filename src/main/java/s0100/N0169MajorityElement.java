@@ -1,8 +1,9 @@
 package s0100;
 
-import org.junit.Test;
-
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Map;
+import java.util.Random;
 
 /**
  * [169] 求众数
@@ -33,36 +34,123 @@ import java.util.HashMap;
  * @date 2019.04.06
  */
 public class N0169MajorityElement {
-    @Test
-    public void case1() {
-        assert 3 == majorityElement(new int[]{3, 2, 3});
-    }
 
-    @Test
-    public void case2() {
-        assert 2 == majorityElement(new int[]{2, 2, 1, 1, 1, 2, 2});
-    }
-
-
-    public int majorityElement(int[] nums) {
-        if (nums.length == 1) {
-            return nums[0];
+    /**
+     * 哈希表解法
+     *
+     * @TimeComplexity O(n)
+     * @SpaceComplexity O(n)
+     */
+    public int hash(int[] nums) {
+        Map<Integer, Integer> map = new HashMap<>(nums.length);
+        int result = 0;
+        int maxCount = -1;
+        for (int num : nums) {
+            int count = map.getOrDefault(num, 0) + 1;
+            if (count > maxCount) {
+                result = num;
+                maxCount = count;
+            }
+            map.put(num, count);
         }
+        return result;
+    }
 
-        HashMap<Integer, Integer> countMap = new HashMap<>(nums.length / 2);
-        int threshold = nums.length / 2;
-        for (int i = 0; i < nums.length; ++i) {
-            if (countMap.containsKey(nums[i])) {
-                Integer newCount = countMap.get(nums[i]) + 1;
-                if (newCount > threshold) {
-                    return nums[i];
-                } else {
-                    countMap.put(nums[i], newCount);
-                }
-            } else {
-                countMap.put(nums[i], 1);
+    /**
+     * 排序解法
+     *
+     * @TimeComplexity O(nlog ( n))
+     * @SpaceComplexity O(log ( n))
+     */
+    public int sort(int[] nums) {
+        Arrays.sort(nums);
+        return nums[nums.length / 2];
+    }
+
+    /**
+     * 随机化
+     *
+     * @TimeComplexity O(n)
+     * @SpaceComplexity O(1)
+     */
+    public int random(int[] nums) {
+        Random rand = new Random();
+
+        while (true) {
+            int guess = nums[rand.nextInt(nums.length)];
+            if (count(nums, guess) > nums.length / 2) {
+                return guess;
             }
         }
-        return 0;
+    }
+
+    private int count(int[] nums, int target) {
+        int count = 0;
+        for (int num : nums) {
+            if (num == target) {
+                count++;
+            }
+        }
+        return count;
+    }
+
+    /**
+     * 分治法
+     *
+     * @TimeComplexity nlog(n)
+     * @SpaceComplexity log(n)
+     */
+    public int divideAndConquer(int[] nums) {
+        return majorityElement(nums, 0, nums.length - 1);
+    }
+
+    private int majorityElement(int[] nums, int lo, int hi) {
+        // 终止条件
+        if (lo == hi) {
+            return nums[lo];
+        }
+
+        // 子问题切分
+        int mid = (hi + lo) >> 1;
+        int left = majorityElement(nums, lo, mid);
+        int right = majorityElement(nums, mid + 1, hi);
+
+        // 子问题结果合并
+        if (left == right) {
+            return left;
+        }
+        int leftCount = countInRange(nums, left, lo, hi);
+        int rightCount = countInRange(nums, right, lo, hi);
+
+        return leftCount > rightCount ? left : right;
+    }
+
+    private int countInRange(int[] nums, int num, int lo, int hi) {
+        int count = 0;
+        for (int i = lo; i <= hi; i++) {
+            if (nums[i] == num) {
+                count++;
+            }
+        }
+        return count;
+    }
+
+    /**
+     * 投票法
+     *
+     * @TimeComplexity O(n)
+     * @SpaceComplexity O(1)
+     */
+    public int vote(int[] nums) {
+        int voting = 0;
+
+        for (int i = 0, count = 0; i < nums.length; ++i) {
+            if (count == 0) {
+                voting = nums[i];
+            }
+            count += (nums[i] == voting) ? 1 : -1;
+        }
+
+        return voting;
     }
 }

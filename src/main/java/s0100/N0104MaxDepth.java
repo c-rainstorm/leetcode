@@ -4,6 +4,9 @@ import me.rainstorm.ds.TreeNode;
 import me.rainstorm.util.TreeNodeUtil;
 import org.junit.Test;
 
+import java.util.LinkedList;
+import java.util.Queue;
+
 /**
  * @author baochen1.zhang
  * @date 2019.06.17
@@ -31,13 +34,30 @@ public class N0104MaxDepth {
     }
 
 
+    /**
+     * 递归
+     *
+     * @TimeComplexity O(n)
+     * @SpaceComplexity log(n)
+     */
     public int maxDepth(TreeNode root) {
-        if (root == null) {
-            return 0;
-        }
+        if (root == null) return 0;
+        return Math.max(maxDepth(root.left), maxDepth(root.right)) + 1;
+    }
 
-        int leftDepth = maxDepth(root.left);
-        int rightDepth = maxDepth(root.right);
-        return Math.max(leftDepth, rightDepth) + 1;
+    public int bfs(TreeNode root) {
+        if (root == null) return 0;
+
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.offer(root);
+        int level = 0;
+        for (int count = queue.size(); !queue.isEmpty(); ++level, count = queue.size()) {
+            do {
+                TreeNode node = queue.poll();
+                if (node.left != null) queue.add(node.left);
+                if (node.right != null) queue.offer(node.right);
+            } while (--count > 0);
+        }
+        return level;
     }
 }
