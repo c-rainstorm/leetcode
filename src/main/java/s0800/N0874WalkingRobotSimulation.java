@@ -36,6 +36,6 @@ public class N0874WalkingRobotSimulation {
     }
 
     private Long toLong(int x, int y) {
-        return ((long) x + 30000) << 16 + y + 30000;
+        return (((long) x + 30000) << 16) + y + 30000;
     }
 }
