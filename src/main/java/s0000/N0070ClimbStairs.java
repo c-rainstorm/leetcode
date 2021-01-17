@@ -1,7 +1,5 @@
 package s0000;
 
-import org.junit.Test;
-
 /**
  * [70] 爬楼梯
  * <p>
@@ -41,34 +39,44 @@ import org.junit.Test;
  */
 public class N0070ClimbStairs {
 
-    @Test
-    public void case1() {
-        assert climbStairs(1) == 1;
+    /**
+     * 递归版本
+     * f(n) = f(n - 1) + f(n - 1);
+     */
+    public int recursion(int n) {
+        if (n <= 2) return n;
+        return recursion(n - 1) + recursion(n - 2);
     }
 
-    @Test
-    public void case2() {
-        assert climbStairs(2) == 2;
+    /**
+     * 递归 + 记忆化
+     */
+    public int recursionWithMemory(int n) {
+        return recursionWithMemory(n, new int[n + 1]);
     }
 
-    @Test
-    public void case3() {
-        assert climbStairs(3) == 3;
+    public int recursionWithMemory(int n, int[] m) {
+        if (n <= 2) return n;
+
+        if (m[n] == 0)
+            m[n] = recursionWithMemory(n - 1, m) + recursionWithMemory(n - 2, m);
+
+        return m[n];
     }
 
-    public int climbStairs(int n) {
-        if (n == 1) {
-            return 1;
+    /**
+     * dp[i] = dp[i-1] + dp[i-2]
+     * df[0] = dp[1] = 1;
+     */
+    public int dp(int n) {
+        if (n <= 2) return n;
+        int[] dp = new int[2];
+        dp[0] = dp[1] = 1;
+        for (int i = 2; i <= n; ++i) {
+            int tmp = dp[0] + dp[1];
+            dp[0] = dp[1];
+            dp[1] = tmp;
         }
-
-        int f1 = 1;
-        int f2 = 2;
-        for (int i = 2; i < n; ++i) {
-            int tmp = f1 + f2;
-            f1 = f2;
-            f2 = tmp;
-        }
-
-        return f2;
+        return dp[1];
     }
 }
