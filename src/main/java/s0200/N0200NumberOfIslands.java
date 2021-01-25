@@ -1,5 +1,7 @@
 package s0200;
 
+import org.junit.Test;
+
 import java.util.LinkedList;
 import java.util.Queue;
 
@@ -107,45 +109,88 @@ public class N0200NumberOfIslands {
         dfs(grid, row, col + 1);
     }
 
-    public int bfs(char[][] grid) {
-        if (grid == null || grid.length == 0) return 0;
+    @Test
+    public void test() {
+        char[][] grid = new char[][]{
+                {'1', '1', '1', '1', '1', '0', '1', '1', '1', '1', '1', '1', '1', '1', '1', '0', '1', '0', '1', '1'},
+                {'0', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '0', '1', '1', '1', '1', '1', '0'},
+                {'1', '0', '1', '1', '1', '0', '0', '1', '1', '0', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1'},
+                {'1', '1', '1', '1', '0', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1'},
+                {'1', '0', '0', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1'},
+                {'1', '0', '1', '1', '1', '1', '1', '1', '0', '1', '1', '1', '0', '1', '1', '1', '0', '1', '1', '1'},
+                {'0', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '0', '1', '1', '0', '1', '1', '1', '1'},
+                {'1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '0', '1', '1', '1', '1', '0', '1', '1'},
+                {'1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '0', '1', '1', '1', '1', '1', '1', '1', '1', '1'},
+                {'1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1'},
+                {'0', '1', '1', '1', '1', '1', '1', '1', '0', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1'},
+                {'1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1'},
+                {'1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1'},
+                {'1', '1', '1', '1', '1', '0', '1', '1', '1', '1', '1', '1', '1', '0', '1', '1', '1', '1', '1', '1'},
+                {'1', '0', '1', '1', '1', '1', '1', '0', '1', '1', '1', '0', '1', '1', '1', '1', '0', '1', '1', '1'},
+                {'1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '0', '1', '1', '1', '1', '1', '1', '0'},
+                {'1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '0', '1', '1', '1', '1', '0', '0'},
+                {'1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1'},
+                {'1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1'},
+                {'1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1'}
+        };
+        assert numIslands(grid) == 1;
+    }
 
-        int rows = grid.length;
-        int cols = grid[0].length;
-        int ans = 0;
+    public int numIslands(char[][] grid) {
+        int m = grid.length;
+        int n = grid[0].length;
 
-        for (int r = 0; r < rows; ++r) {
-            for (int c = 0; c < cols; ++c) {
-                if (grid[r][c] == '1') {
-                    ++ans;
-                    grid[r][c] = '0';
-                    Queue<Integer> queue = new LinkedList<>();
-                    queue.add(r * cols + c);
-                    while (!queue.isEmpty()) {
-                        int id = queue.poll();
-                        int row = id / cols;
-                        int col = id % cols;
-                        if (row - 1 >= 0 && grid[row - 1][col] == '1') {
-                            queue.add((row - 1) * cols + col);
-                            grid[row - 1][col] = '0';
-                        }
-                        if (row + 1 < rows && grid[row + 1][col] == '1') {
-                            queue.add((row + 1) * cols + col);
-                            grid[row + 1][col] = '0';
-                        }
-                        if (col - 1 >= 0 && grid[row][col - 1] == '1') {
-                            queue.add(row * cols + col - 1);
-                            grid[row][col - 1] = '0';
-                        }
-                        if (col + 1 < cols && grid[row][col + 1] == '1') {
-                            queue.add(row * cols + col + 1);
-                            grid[row][col + 1] = '0';
-                        }
-                    }
+        int count = 0;
+        for (int i = 0; i < m; ++i) {
+            for (int j = 0; j < n; ++j) {
+                if (grid[i][j] == '1') {
+                    count++;
+                    grid[i][j] = '0';
+                    bfs(grid, m, n, i, j);
                 }
             }
         }
 
-        return ans;
+        return count;
     }
+
+    private void bfs(char[][] grid, int m, int n, int i, int j) {
+        Queue<Integer> queue = new LinkedList<>();
+        queue.offer(i * n + j);
+        while (!queue.isEmpty()) {
+            int pos = queue.poll();
+            int r = pos / n;
+            int c = pos % n;
+
+            if (r - 1 >= 0 && grid[r - 1][c] == '1') {
+                grid[r - 1][c] = '0';
+                queue.offer(pos - n);
+            }
+            if (r + 1 < m && grid[r + 1][c] == '1') {
+                grid[r + 1][c] = '0';
+                queue.offer(pos + n);
+            }
+            if (c - 1 >= 0 && grid[r][c - 1] == '1') {
+                grid[r][c - 1] = '0';
+                queue.offer(pos - 1);
+            }
+            if (c + 1 < n && grid[r][c + 1] == '1') {
+                grid[r][c + 1] = '0';
+                queue.offer(pos + 1);
+            }
+        }
+    }
+
+    private void print(char[][] grid) {
+        StringBuilder joiner = new StringBuilder();
+        for (char[] chars : grid) {
+            joiner.setLength(0);
+            for (char ch : chars) {
+                joiner.append(ch).append(" ");
+            }
+            System.out.println(joiner.toString());
+        }
+    }
+
+
 }

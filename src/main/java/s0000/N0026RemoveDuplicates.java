@@ -100,24 +100,16 @@ public class N0026RemoveDuplicates {
     }
 
     public int removeDuplicates(int[] nums) {
-        if (nums == null || nums.length == 0) {
-            return 0;
-        }
+        if (nums == null || nums.length == 0) return 0;
 
-        if (nums.length == 1) {
-            return 1;
-        }
-
-        int x = 1;
-        int j = 1;
+        int i = 1, j = 1;
         while (j < nums.length) {
             if (nums[j - 1] == nums[j]) {
                 j++;
             } else {
-                nums[x++] = nums[j++];
+                nums[i++] = nums[j++];
             }
         }
-
-        return x;
+        return i;
     }
 }

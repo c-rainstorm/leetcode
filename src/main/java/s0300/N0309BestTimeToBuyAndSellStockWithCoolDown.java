@@ -14,6 +14,9 @@ public class N0309BestTimeToBuyAndSellStockWithCoolDown {
      * dp[i][2] = dp[i-1][1] + price[i]                 // 前一天卖出，今天为冻结期
      * <p>
      * ans = max(dp[n-1][0], dp[n-1][2])                // 不持股或冻结期
+     *
+     * // 持股 -卖出-> 冻结期 --> 不持股
+     * //  ^--------买入-----------|
      */
     public int maxProfit(int[] prices) {
         if (prices == null || prices.length == 0) return 0;

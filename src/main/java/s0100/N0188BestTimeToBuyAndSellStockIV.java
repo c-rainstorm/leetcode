@@ -11,12 +11,10 @@ public class N0188BestTimeToBuyAndSellStockIV {
 
     /**
      * //                   dp[i-1][j][0]                 //  不操作
-     * // dp[i][j][0] = max dp[i-1][j][0] - prices[i]     //  买入
-     * //                   dp[i-1][j-1][1] + prices[i]   //  卖出
+     * // dp[i][j][0] = max dp[i-1][j-1][1] + prices[i]   //  卖出
      * <p>
      * //                   dp[i-1][j][1]                 //  不操作
      * // dp[i][j][1] = max dp[i-1][j][0] - prices[i]     //  买入
-     * //                   dp[i-1][j-1][1] + prices[i]   //  卖出
      * <p>
      * // dp[0][j][0] = 0  // 无操作，收益为 0
      * // dp[0][j][1] = Integer.MIN_VALUE  // 不合法的操作，置为最小值
