@@ -6,7 +6,7 @@ public class N0322CoinChange {
         for (int i = 1; i <= amount; ++i) {
             int min = Integer.MAX_VALUE;
             for (int coin : coins) {
-                if (i - coin >= 0 && dp[i - coin] < min) {
+                if (i >= coin && dp[i - coin] < min) {
                     min = dp[i - coin] + 1;
                 }
             }

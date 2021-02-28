@@ -67,6 +67,7 @@ public class N0231IsPowerOfTwo {
         if ((n & Integer.MIN_VALUE) != 0 || n == 0) {
             return false;
         }
-        return BitUtil.countBit(n) == 1;
+
+        return (n & (n - 1)) == 0;
     }
 }

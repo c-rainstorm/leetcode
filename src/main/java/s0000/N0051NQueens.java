@@ -6,21 +6,13 @@ import java.util.*;
  * @author traceless
  */
 public class N0051NQueens {
-    private List<List<String>> results;
-    private Set<Integer> cols;
-    private Set<Integer> pies;
-    private Set<Integer> nas;
-
-    public void init(int n) {
-        results = new LinkedList<>();
-        cols = new HashSet<>(n);
-        pies = new HashSet<>(n);
-        nas = new HashSet<>(n);
-    }
+    private List<List<String>> results = new LinkedList<>();
+    private Set<Integer> cols = new HashSet<>();
+    private Set<Integer> pies = new HashSet<>();
+    private Set<Integer> nas = new HashSet<>();
 
     public List<List<String>> solveNQueens(int n) {
         if (n < 1) return Collections.emptyList();
-        init(n);
         dfs(n, 0, new int[n]);
         return results;
     }

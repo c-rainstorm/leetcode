@@ -192,5 +192,4 @@ public class N0200NumberOfIslands {
         }
     }
 
-
 }
